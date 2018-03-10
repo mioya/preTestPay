@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by mio on 2018. 3. 10..
@@ -31,7 +31,7 @@ public class CouponGeneraterTest {
     @Test
     public void testCouponDupulicate(){
         //100만번 15초
-        int testCount = 100;
+        int testCount = 10;
 
         Set<String> couponeGenerateList = new TreeSet<>();
         for(int i =0;i<testCount;i++){
@@ -51,6 +51,7 @@ public class CouponGeneraterTest {
             }
             tempcoupon[index] = COUPON_NUMBER_LIST[Math.abs(sr.nextInt()%(COUPON_NUMBER_LIST.length-1))];
         }
+        log.debug(String.valueOf(tempcoupon));
         return String.valueOf(tempcoupon);
     }
 }

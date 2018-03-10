@@ -10,7 +10,8 @@ import java.util.Date;
  * Created by mio on 2018. 3. 9..
  */
 @Entity
-@Table(name = "issued_coupon")
+@Table(name = "issued_coupon",
+        uniqueConstraints = @UniqueConstraint(name = "id", columnNames = { "email", "coupon_number" }))
 @NoArgsConstructor
 @Setter
 @Getter
