@@ -3,6 +3,7 @@ package com.kakaopay.controller;
 import com.kakaopay.model.IssuedCoupon;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

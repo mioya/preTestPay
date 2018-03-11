@@ -3,56 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>sample page </title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.*">
-    <script src="/bootstrap/js/bootstrap.*"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<h2></h2>
-
-<form>
-    <fieldset>
-        <legend>Legend</legend>
-        <label>Label name</label>
-        <input type="text" placeholder="Type something…">
-        <span class="help-block">Example block-level help text here.</span>
-        <button type="submit" class="btn">Submit</button>
-    </fieldset>
-</form>
-
-<div class="alert">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Warning!</strong> Best check yo self, you're not looking too good.
-</div>
+<div class="container">
+    <h2>이메일을 입력하세요</h2>
 
 
-<table class="table table-bordered">
-        <caption>...</caption>
+    <form class="form-search" name = "emailForm">
+        <div class="control-group">
+            <div class="controls">
+                <input class="span4" type="email" id="inputEmail" required placeholder="Email">
+            </div>
+
+            <button id = "btnId" type="submit" class="btn btn-primary">전송</button>
+        </div>
+    </form>
+
+
+    <h2>발급된 쿠폰 정보 리스트</h2>
+
+    <table class="table table-bordered">
         <thead>
         <tr>
-            <th>...</th>
-            <th>...</th>
+            <th id="greetingId"></th>
+            <th>3</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>...</td>
-            <td>...</td>
+            <td>4</td>
+            <td>5</td>
         </tr>
         </tbody>
-</table>
+    </table>
 
-<div class="pagination">
-    <ul>
-        <li><a href="#">Prev</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">Next</a></li>
-    </ul>
+    <div class="pagination">
+        <ul>
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
 </div>
-
 </body>
+<script>
+    $( document ).ready(function() {
+
+        var url = window.location;
+
+        $("#btnId").click(function(event){
+            event.preventDefault();
+
+            ajaxGet();
+        })
+
+        function ajaxGet(){
+                $.ajax({
+                type : "POST",
+                dataType : "json",
+                data : JSON.stringify({ "email": $('#inputEmail').val()}),
+                contentType: "application/json",
+                url : url + "issued-coupons",
+                success: function(data){
+                    fillData(data);
+                },
+                error : function(e) {
+                    fillData(null);
+                }
+            });
+        }
+
+
+    })
+
+</script>
 </html>

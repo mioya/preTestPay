@@ -42,15 +42,15 @@ public class IssuedCouponRepositoryTest extends CouponApplicationTests{
 
     @Test
     public void testFindByEmailAndCouponNumber(){
-        boolean isExistsCouponOrEmail = issuedCouponRepository.existsByEmailOrCouponNumber(TEST_EMAIL_0,TEST_COUPON_NUMBER_0);
+        boolean isExistsCouponOrEmail = issuedCouponRepository.existsByEmail(TEST_EMAIL_0);
         log.info(isExistsCouponOrEmail);
         assertEquals(isExistsCouponOrEmail, true);
     }
 
     @Test
     public void testFindByNotIssuedCouponAndEmail(){
-        boolean isExistsCouponOrEmail = issuedCouponRepository.existsByEmailOrCouponNumber(TEST_EMAIL_1,TEST_COUPON_NUMBER_1);
-        assertEquals(isExistsCouponOrEmail, false);
+        boolean isExistsCouponOrEmail = issuedCouponRepository.existsByCouponNumber(TEST_COUPON_NUMBER_0);
+        assertEquals(isExistsCouponOrEmail, true);
     }
 
 }

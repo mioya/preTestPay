@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Service
 public class IssuedCouponService {
@@ -21,7 +22,7 @@ public class IssuedCouponService {
     }
 
     @Transactional
-    public IssuedCoupon save(IssuedCoupon issuedCoupon) {
+    public IssuedCoupon saveByEmail(IssuedCoupon issuedCoupon) {
 
         if(issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())){
             throw new DupulicateEmailException();
@@ -34,6 +35,11 @@ public class IssuedCouponService {
         }
 
         issuedCoupon.setCouponNumber(generatedCoupon);
+        issuedCoupon.setCreatedDt(new Date());
         return issuedCouponRepository.save(issuedCoupon);
+    }
+
+    public Iterable<IssuedCoupon> findAll() {
+        return issuedCouponRepository.findAll();
     }
 }

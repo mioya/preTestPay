@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
@@ -28,7 +29,7 @@ public class IssuedCoupon {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "coupon_number")
+    @Column(name = "coupon_number",length = 20)
     private String couponNumber;
 
     @Column(name = "created_dt", updatable = false)

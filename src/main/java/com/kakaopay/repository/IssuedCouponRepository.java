@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IssuedCouponRepository extends PagingAndSortingRepository<IssuedCoupon,String> {
-    boolean existsByEmailOrCouponNumber(String email, String couponNumber);
     boolean existsByCouponNumber(String couponNumber);
     boolean existsByEmail(String email);
 }

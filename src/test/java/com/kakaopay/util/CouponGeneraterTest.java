@@ -3,7 +3,6 @@ package com.kakaopay.util;
 import lombok.extern.apachecommons.CommonsLog;
 import org.junit.Test;
 
-import java.security.SecureRandom;
 import java.util.Set;
 import java.util.TreeSet;
 
