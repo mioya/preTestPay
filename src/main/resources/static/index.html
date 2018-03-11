@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>sample page </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>이메일을 입력하세요</h2>
+
+
+    <form class="form-search" name = "emailForm">
+        <div class="control-group">
+            <div class="controls">
+                <input class="span4" type="email" id="inputEmail" required placeholder="Email">
+            </div>
+            <br/>
+            <button id = "btnId" type="submit" class="btn btn-primary">전송</button>
+        </div>
+    </form>
+
+
+    <h2>발급된 쿠폰 정보 리스트</h2>
+
+    <table class="table table-bordered" id = "couponList">
+        <thead>
+            <tr>
+                <th id="greetingId">Id</th>
+                <th>Email</th>
+                <th>Coupon</th>
+                <th>Datetime</th>
+            </tr>
+        <tbody id="tbody">
+        </tbody>
+        </thead>
+    </table>
+
+</div>
+</body>
+
+<script>
+    $( document ).ready(function() {
+
+        var url = window.location;
+
+        findAll();
+
+        function findAll() {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                url: url + "issued-coupons",
+                success: [function (data) {
+                    var html = '';
+                    $.each(data, function(couponIndex, coupon) {
+                        html += '<tr><td>' + coupon.id + '</td><td>' + coupon.email + '</td><td>' +
+                            coupon.couponNumber + '</td><td>' + coupon.createdDt + '</td></tr>'
+                    });
+                    $('#tbody').empty();
+                    $('#tbody').append(html);
+                }]
+            });
+        }
+
+        $("#btnId").click(function (event) {
+            event.preventDefault();
+
+            issueCoupon();
+        })
+
+        function issueCoupon() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({"email": $('#inputEmail').val()}),
+                contentType: "application/json",
+                url: url + "issued-coupons",
+                complete : [function () {
+                    findAll();
+                }],
+                error : [function(response) {
+                    if(response.status == 500){
+                        alert("중복된 이메일입니다.");
+                    }
+                }]
+            });
+        }
+
+    })
+
+</script>
+</html>

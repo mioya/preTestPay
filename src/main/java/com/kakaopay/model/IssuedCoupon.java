@@ -21,10 +21,9 @@ import java.util.Date;
 public class IssuedCoupon {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private long id;
 
     @Column(name = "email")
     private String email;

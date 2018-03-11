@@ -7,9 +7,12 @@ import com.kakaopay.model.IssuedCoupon;
 import com.kakaopay.service.IssuedCouponService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -27,9 +30,8 @@ public class IssuedCouponController {
     }
 
     @GetMapping(value = "/issued-coupons")
-    public Iterable<IssuedCoupon> list(){
-        Iterable<IssuedCoupon> issuedCouponList = issuedCouponService.findAll();
-        return issuedCouponList;
+    public List<IssuedCoupon> list(@PageableDefault Pageable pageable){
+        return issuedCouponService.findAll(pageable).getContent();
     }
 
     @PostMapping(value = "/issued-coupons")

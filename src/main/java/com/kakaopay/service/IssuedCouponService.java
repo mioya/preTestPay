@@ -5,13 +5,17 @@ import com.kakaopay.exception.DupulicateEmailException;
 import com.kakaopay.model.IssuedCoupon;
 import com.kakaopay.repository.IssuedCouponRepository;
 import com.kakaopay.util.CouponGenerater;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
+@CommonsLog
 public class IssuedCouponService {
 
     IssuedCouponRepository issuedCouponRepository;
@@ -23,7 +27,6 @@ public class IssuedCouponService {
 
     @Transactional
     public IssuedCoupon saveByEmail(IssuedCoupon issuedCoupon) {
-
         if(issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())){
             throw new DupulicateEmailException();
         }
@@ -39,7 +42,7 @@ public class IssuedCouponService {
         return issuedCouponRepository.save(issuedCoupon);
     }
 
-    public Iterable<IssuedCoupon> findAll() {
-        return issuedCouponRepository.findAll();
+    public Page<IssuedCoupon> findAll(Pageable pageable) {
+        return issuedCouponRepository.findAll(pageable);
     }
 }
