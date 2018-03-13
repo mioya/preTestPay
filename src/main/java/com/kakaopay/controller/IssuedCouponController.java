@@ -34,7 +34,7 @@ public class IssuedCouponController {
 
     @PostMapping(value = "/issued-coupons")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody IssuedCoupon issuedCoupon){
+    public void create(@RequestBody IssuedCoupon issuedCoupon) {
         checkInputVaild(issuedCoupon);
         issuedCouponService.saveByEmail(issuedCoupon);
     }

@@ -16,7 +16,6 @@ public class CouponGeneraterTest {
 
     @Test
     public void testCouponDupulicate(){
-        //100만번 15초
         int testCount = 10;
 
         Set<String> couponeGenerateList = new TreeSet<>();
@@ -26,5 +25,6 @@ public class CouponGeneraterTest {
         log.debug(couponeGenerateList.size());
         assertEquals(testCount,couponeGenerateList.size());
     }
+
 
 }

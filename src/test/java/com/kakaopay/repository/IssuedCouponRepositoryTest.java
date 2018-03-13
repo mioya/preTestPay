@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,7 +29,7 @@ public class IssuedCouponRepositoryTest extends CouponApplicationTests{
     public void createSampleIssuedCoupon() {
         IssuedCoupon issuedCoupon = new IssuedCoupon();
         issuedCoupon.setCouponNumber(TEST_COUPON_NUMBER_0);
-        issuedCoupon.setCreatedDt(new Date());
+        issuedCoupon.setCreatedDt(LocalDateTime.now());
         issuedCoupon.setEmail(TEST_EMAIL_0);
         issuedCouponRepository.save(issuedCoupon);
     }
@@ -40,20 +40,20 @@ public class IssuedCouponRepositoryTest extends CouponApplicationTests{
     }
 
     @Test
-    public void testFindByEmailAndCouponNumber(){
+    public void testFindByExistEmail(){
         boolean isExistsCouponOrEmail = issuedCouponRepository.existsByEmail(TEST_EMAIL_0);
         log.info(isExistsCouponOrEmail);
         assertEquals(isExistsCouponOrEmail, true);
     }
     @Test
-    public void testNotFindByEmailAndCouponNumber(){
+    public void testFindByNotExistEmail(){
         boolean isExistsCouponOrEmail = issuedCouponRepository.existsByEmail(TEST_EMAIL_1);
         log.info(isExistsCouponOrEmail);
         assertEquals(isExistsCouponOrEmail, false);
     }
 
     @Test
-    public void testFindByNotIssuedCouponAndEmail(){
+    public void testFindByNotIssuedCoupon(){
         boolean isExistsCouponOrEmail = issuedCouponRepository.existsByCouponNumber(TEST_COUPON_NUMBER_0);
         assertEquals(isExistsCouponOrEmail, true);
     }

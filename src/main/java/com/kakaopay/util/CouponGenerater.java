@@ -3,7 +3,7 @@ package com.kakaopay.util;
 
 import lombok.extern.apachecommons.CommonsLog;
 
-import java.security.SecureRandom;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by mio on 2018. 3. 10..
@@ -26,15 +26,13 @@ public class CouponGenerater {
 
     public static String generate() {
         char[] tempcoupon = new char[20];
-        SecureRandom sr = new SecureRandom();
-        sr.nextInt();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         for(int index = 0;index < tempcoupon.length-1;index++){
             if((index+1)%5==0){
                 tempcoupon[index++]= '-';
             }
-            tempcoupon[index] = COUPON_NUMBER_LIST[Math.abs(sr.nextInt()%(COUPON_NUMBER_LIST.length-1))];
+            tempcoupon[index] = COUPON_NUMBER_LIST[Math.abs(random.nextInt()%(COUPON_NUMBER_LIST.length-1))];
         }
-        log.debug(String.valueOf(tempcoupon));
         return String.valueOf(tempcoupon);
     }
 }

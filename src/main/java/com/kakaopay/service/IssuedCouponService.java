@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 @CommonsLog
@@ -30,17 +30,18 @@ public class IssuedCouponService {
         if(issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())){
             throw new DupulicateEmailException();
         }
-
+        issuedCoupon.setCreatedDt(LocalDateTime.now());
         String generatedCoupon = CouponGenerater.generate();
 
-        if(issuedCouponRepository.existsByCouponNumber(generatedCoupon)){
-           throw new DupulicateCouponException();
+        synchronized (this){
+            if(issuedCouponRepository.existsByCouponNumber(generatedCoupon)){
+                throw new DupulicateCouponException();
+            }
+            issuedCoupon.setCouponNumber(generatedCoupon);
+
+            issuedCoupon =  issuedCouponRepository.save(issuedCoupon);
         }
-
-        issuedCoupon.setCouponNumber(generatedCoupon);
-        issuedCoupon.setCreatedDt(new Date());
-
-        return issuedCouponRepository.save(issuedCoupon);
+        return issuedCoupon;
     }
 
     public Page<IssuedCoupon> findAll(Pageable pageable) {

@@ -1,11 +1,9 @@
 package com.kakaopay.model;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by mio on 2018. 3. 9..
@@ -25,12 +23,12 @@ public class IssuedCoupon {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "coupon_number",length = 20)
+    @Column(name = "coupon_number",length = 20, nullable = false)
     private String couponNumber;
 
     @Column(name = "created_dt", updatable = false)
-    private Date createdDt;
+    private LocalDateTime createdDt;
 }

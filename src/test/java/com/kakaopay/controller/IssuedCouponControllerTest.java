@@ -37,4 +37,16 @@ public class IssuedCouponControllerTest {
         assertEquals(HttpStatus.CREATED.value(), response.getStatusCode());
     }
 
+    @Test
+    public void testIssueCouponByWrongFormatEmail() {
+        IssuedCoupon issuedCoupon = new IssuedCoupon();
+        issuedCoupon.setEmail("kw23523m");
+
+        Response response = RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(issuedCoupon)
+                .post(COUPON_URL);
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatusCode());
+    }
 }
