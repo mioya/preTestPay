@@ -22,7 +22,6 @@ public class IssuedCouponRepositoryTest extends CouponApplicationTests{
     private IssuedCouponRepository issuedCouponRepository;
 
     private static String TEST_COUPON_NUMBER_0 = "82Wp-p7Dz-E0Ws-NxaC";
-    private static String TEST_COUPON_NUMBER_1 = "0000-p7Dz-E0Ws-NxaC";
     private static String TEST_EMAIL_0 = "kwchoi@naver.com";
     private static String TEST_EMAIL_1 = "kwc@naver.com";
 

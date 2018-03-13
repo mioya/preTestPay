@@ -2,11 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>sample page </title>
+    <title>copon issue</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="jquery.bootpag.min.js"></script>
 </head>
 <body>
 
@@ -27,19 +28,24 @@
 
     <h2>발급된 쿠폰 정보 리스트</h2>
 
-    <table class="table table-bordered" id = "couponList">
+    <table class="table table-bordered">
         <thead>
-            <tr>
-                <th id="greetingId">Id</th>
-                <th>Email</th>
-                <th>Coupon</th>
-                <th>Datetime</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Coupon</th>
+            <th>Datetime</th>
+        </tr>
         <tbody id="tbody">
         </tbody>
         </thead>
     </table>
 
+    <div id="content"></div>
+    <div id="page-selection"></div>
+    <script>
+
+    </script>
 </div>
 </body>
 
@@ -50,6 +56,19 @@
 
         findAll();
 
+        $('#page-selection').on("page", function(event, num){
+            console.log(num);
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                url: url + "issued-coupons?page=" + (num-1),
+                complete : [function (data) {
+                    drawTable(data.responseJSON);
+                }],
+            });
+        });
+
         function findAll() {
             $.ajax({
                 type: "GET",
@@ -57,15 +76,33 @@
                 contentType: "application/json",
                 url: url + "issued-coupons",
                 success: [function (data) {
-                    var html = '';
-                    $.each(data, function(couponIndex, coupon) {
-                        html += '<tr><td>' + coupon.id + '</td><td>' + coupon.email + '</td><td>' +
-                            coupon.couponNumber + '</td><td>' + coupon.createdDt + '</td></tr>'
-                    });
-                    $('#tbody').empty();
-                    $('#tbody').append(html);
+                    drawTable(data);
                 }]
-            });
+            })
+        }
+
+        function drawTable(data) {
+            var html = '';
+            if(data.totalElements == 0){
+                html += '<tr><td colspan="4">' + "데이터가 없습니다" + '</td></tr>';
+            }
+
+            if(data.totalElements > 0) {
+                $.each(data.content, function (couponIndex, coupon) {
+                    html += '<tr><td>' + coupon.id + '</td><td>' + coupon.email + '</td><td>' +
+                        coupon.couponNumber + '</td><td>' + coupon.createdDt + '</td></tr>'
+                });
+
+            }
+
+            $('#tbody').empty();
+            $('#tbody').append(html);
+
+            $('#page-selection').bootpag({
+                total: data.totalPages,
+                page: data.number + 1,
+                maxVisible: data.size
+            })
         }
 
         $("#btnId").click(function (event) {
@@ -85,14 +122,19 @@
                     findAll();
                 }],
                 error : [function(response) {
-                    if(response.status == 500){
+                    if(response.status == 400){
                         alert("중복된 이메일입니다.");
+                    }else if(response.status == 406){
+                        alert("잘못된 형식의 이메일입니다.");
+                    }else if(response.status == 409){
+                        alert("쿠폰생성 에러가 발생했습니다. 다시 시도해주세요.");
                     }
                 }]
             });
         }
 
     })
+
 
 </script>
 </html>

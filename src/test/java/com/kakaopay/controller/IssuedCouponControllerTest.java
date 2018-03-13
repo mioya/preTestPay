@@ -3,7 +3,6 @@ package com.kakaopay.controller;
 import com.kakaopay.model.IssuedCoupon;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +27,7 @@ public class IssuedCouponControllerTest {
     @Test
     public void testIssueCouponByEmail() {
         IssuedCoupon issuedCoupon = new IssuedCoupon();
-        issuedCoupon.setEmail("kw@naver.com");
+        issuedCoupon.setEmail("kw23523@naver.com");
 
         Response response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

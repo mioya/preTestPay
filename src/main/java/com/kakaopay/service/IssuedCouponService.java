@@ -34,11 +34,12 @@ public class IssuedCouponService {
         String generatedCoupon = CouponGenerater.generate();
 
         if(issuedCouponRepository.existsByCouponNumber(generatedCoupon)){
-            throw new DupulicateCouponException();
+           throw new DupulicateCouponException();
         }
 
         issuedCoupon.setCouponNumber(generatedCoupon);
         issuedCoupon.setCreatedDt(new Date());
+
         return issuedCouponRepository.save(issuedCoupon);
     }
 

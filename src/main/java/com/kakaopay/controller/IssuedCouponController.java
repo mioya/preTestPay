@@ -1,18 +1,16 @@
 package com.kakaopay.controller;
 
-import com.kakaopay.exception.DupulicateCouponException;
-import com.kakaopay.exception.DupulicateEmailException;
 import com.kakaopay.exception.InvaildEmailFormatException;
 import com.kakaopay.model.IssuedCoupon;
 import com.kakaopay.service.IssuedCouponService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -30,8 +28,8 @@ public class IssuedCouponController {
     }
 
     @GetMapping(value = "/issued-coupons")
-    public List<IssuedCoupon> list(@PageableDefault Pageable pageable){
-        return issuedCouponService.findAll(pageable).getContent();
+    public Page<IssuedCoupon> list(@PageableDefault(size = 3) Pageable pageable){
+        return issuedCouponService.findAll(pageable);
     }
 
     @PostMapping(value = "/issued-coupons")
@@ -47,18 +45,4 @@ public class IssuedCouponController {
         }
     }
 
-    @ExceptionHandler(value = {DupulicateCouponException.class})
-    public HttpStatus couponExceptionHandler(DupulicateCouponException e){
-        return e.getExceptionCode(HttpStatus.SERVICE_UNAVAILABLE);
-    }
-
-    @ExceptionHandler(value = {DupulicateEmailException.class})
-    public HttpStatus emailExceptionHandler(DupulicateEmailException e){
-        return e.getExceptionCode(HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = {InvaildEmailFormatException.class})
-    public HttpStatus invaildEmailExceptionHandler(InvaildEmailFormatException e){
-        return e.getExceptionCode(HttpStatus.SERVICE_UNAVAILABLE);
-    }
 }
