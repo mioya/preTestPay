@@ -31,4 +31,5 @@ public class IssuedCoupon {
 
     @Column(name = "created_dt", updatable = false)
     private LocalDateTime createdDt;
+
 }

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
@@ -26,15 +26,16 @@ public class IssuedCouponService {
     }
 
     @Transactional
-    public IssuedCoupon saveByEmail(IssuedCoupon issuedCoupon) {
+    public synchronized IssuedCoupon saveByEmail(IssuedCoupon issuedCoupon) {
+
         if (issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())) {
-            throw new DupulicateEmailException(String.format("email already exists-->%s",issuedCoupon.getEmail()));
+            throw new DupulicateEmailException(String.format("email already exists-->%s", issuedCoupon.getEmail()));
         }
         issuedCoupon.setCreatedDt(LocalDateTime.now());
-        String generatedCoupon = CouponGenerater.generate();
 
+        String generatedCoupon = CouponGenerater.generate();
         if (issuedCouponRepository.existsByCouponNumber(generatedCoupon)) {
-            throw new DupulicateCouponException(String.format("coupon already generate-->%s",generatedCoupon));
+            throw new DupulicateCouponException(String.format("coupon already generate-->%s", generatedCoupon));
         }
         issuedCoupon.setCouponNumber(generatedCoupon);
 

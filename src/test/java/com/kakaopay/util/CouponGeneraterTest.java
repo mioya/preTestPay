@@ -20,9 +20,11 @@ public class CouponGeneraterTest {
 
         Set<String> couponeGenerateList = new TreeSet<>();
         for(int i =0;i<testCount;i++){
-            couponeGenerateList.add(CouponGenerater.generate());
+            String coupon = CouponGenerater.generate();
+            //log.info(coupon);
+            couponeGenerateList.add(coupon);
         }
-        log.debug(couponeGenerateList.size());
+        log.info(couponeGenerateList.size());
         assertEquals(testCount,couponeGenerateList.size());
     }
 

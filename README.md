@@ -29,7 +29,7 @@
  + spring data 에서 제공 하는 PagingAndSortingRepository 사용
 
 ### 사용 데이터 베이스
- + h2 - 기본 트렌젝션 격리 레벨 Read commited 사용
+ + h2
 
 ## 테스트  
 #### IssuedCouponControllerTest

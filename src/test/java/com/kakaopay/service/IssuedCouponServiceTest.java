@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -24,8 +25,10 @@ public class IssuedCouponServiceTest extends CouponApplicationTests {
     @Autowired
     IssuedCouponRepository issuedCouponRepository;
 
-    static int TEST_COUNT = 100;
-    static int THREAD_COUNT = 10;
+    private static int TEST_COUNT = 5;
+    private static int THREAD_COUNT = 10;
+
+    private static List<IssuedCoupon> couponList = new ArrayList<>();
 
     @Test
     public void testFindByEmailAndCouponNumber() throws InterruptedException {
@@ -46,6 +49,7 @@ public class IssuedCouponServiceTest extends CouponApplicationTests {
         }
         long estimatedTime = System.currentTimeMillis() - startTime;
         log.info("time-->" + estimatedTime + " ms");
+        //log.info(couponList.toString());
         assertEquals((TEST_COUNT*THREAD_COUNT),issuedCouponRepository.count());
     }
 
@@ -57,6 +61,7 @@ public class IssuedCouponServiceTest extends CouponApplicationTests {
                 issuedCoupon.setEmail(createEmail());
                 issuedCoupon = issuedCouponService.saveByEmail(issuedCoupon);
                 //log.info(issuedCoupon);
+                couponList.add(issuedCoupon);
             }
         }
     }
