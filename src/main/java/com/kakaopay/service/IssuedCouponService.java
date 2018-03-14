@@ -27,20 +27,18 @@ public class IssuedCouponService {
 
     @Transactional
     public IssuedCoupon saveByEmail(IssuedCoupon issuedCoupon) {
-        if(issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())){
-            throw new DupulicateEmailException();
+        if (issuedCouponRepository.existsByEmail(issuedCoupon.getEmail())) {
+            throw new DupulicateEmailException(String.format("email already exists-->%s",issuedCoupon.getEmail()));
         }
         issuedCoupon.setCreatedDt(LocalDateTime.now());
         String generatedCoupon = CouponGenerater.generate();
 
-        synchronized (this){
-            if(issuedCouponRepository.existsByCouponNumber(generatedCoupon)){
-                throw new DupulicateCouponException();
-            }
-            issuedCoupon.setCouponNumber(generatedCoupon);
-
-            issuedCoupon =  issuedCouponRepository.save(issuedCoupon);
+        if (issuedCouponRepository.existsByCouponNumber(generatedCoupon)) {
+            throw new DupulicateCouponException(String.format("coupon already generate-->%s",generatedCoupon));
         }
+        issuedCoupon.setCouponNumber(generatedCoupon);
+
+        issuedCoupon = issuedCouponRepository.save(issuedCoupon);
         return issuedCoupon;
     }
 

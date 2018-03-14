@@ -21,7 +21,7 @@ public class IssuedCoupon {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "email", nullable = false)
     private String email;

@@ -41,7 +41,10 @@ public class IssuedCouponController {
 
     private void checkInputVaild(IssuedCoupon issuedCoupon) {
         if(!Pattern.matches(EMAIL_PATTEN, issuedCoupon.getEmail())){
-            throw new InvaildEmailFormatException();
+            throw new InvaildEmailFormatException(String.format("email pattern not matched-->%s",issuedCoupon.getEmail()));
+        }
+        if(issuedCoupon.getId() != null && issuedCoupon.getCreatedDt() !=null){
+            throw new InvaildEmailFormatException(String.format("attack detected-->%s",issuedCoupon.toString()));
         }
     }
 
