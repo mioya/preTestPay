@@ -52,7 +52,8 @@
 ## 프로젝트 빌드 및 실행 방법 : 
 
 1. git clone https://github.com/mioya/preTestPay.git 프로젝트를 다운 
-2. mvn install -Dmaven.test.skip=true
-3. cd target
-4. java -jar coupon-0.0.1-SNAPSHOT.jar
-5. http://localhost:8080 에서 사이트가 뜬것을 확인 가능. 
+2. cd preTestPay
+3. mvn install -Dmaven.test.skip=true
+4. cd target
+5. java -jar coupon-0.0.1-SNAPSHOT.jar
+6. http://localhost:8080 에서 사이트가 뜬것을 확인 가능. 
