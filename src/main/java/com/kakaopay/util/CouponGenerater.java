@@ -32,7 +32,7 @@ public class CouponGenerater {
             if((index+1)%5==0){
                 tempcoupon[index++]= '-';
             }
-            tempcoupon[index] = COUPON_NUMBER_LIST[Math.abs(random.nextInt()%(COUPON_NUMBER_LIST.length-1))];
+            tempcoupon[index] = COUPON_NUMBER_LIST[Math.abs(random.nextInt()%(COUPON_NUMBER_LIST.length))];
         }
         return String.valueOf(tempcoupon);
     }
