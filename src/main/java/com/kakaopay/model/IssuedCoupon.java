@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
  * Created by mio on 2018. 3. 9..
  */
 @Entity
-@Table(name = "issued_coupon",
-        uniqueConstraints = @UniqueConstraint(name = "id", columnNames = { "coupon_number" }))
+@Table(name = "issued_coupon", indexes = { @Index(name = "coupon_number", columnList = "coupon_number")},
+        uniqueConstraints = @UniqueConstraint(name = "id", columnNames = { "email" }))
 @NoArgsConstructor
 @Setter
 @Getter
